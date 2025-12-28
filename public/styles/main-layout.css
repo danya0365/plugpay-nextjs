@@ -49,12 +49,23 @@
 }
 
 .main-nav-link {
-  @apply px-4 py-2 rounded-lg;
+  @apply px-3 py-2 rounded-lg;
   @apply text-sm font-medium text-gray-600 dark:text-gray-300;
   @apply hover:text-gray-900 dark:hover:text-white;
   @apply hover:bg-gray-100 dark:hover:bg-gray-800;
   @apply transition-all duration-200;
+  @apply flex items-center gap-1.5;
 }
+
+.main-nav-link-active {
+  @apply text-indigo-600 dark:text-indigo-400;
+  @apply bg-indigo-50 dark:bg-indigo-900/30;
+}
+
+.main-nav-icon {
+  @apply text-base;
+}
+
 
 /* Header Actions */
 .main-header-actions {

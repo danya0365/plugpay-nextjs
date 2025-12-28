@@ -119,6 +119,11 @@
   color: var(--win98-text-light);
 }
 
+.retro-menu-active {
+  background-color: var(--win98-titlebar);
+  color: var(--win98-text-light);
+}
+
 .retro-menu-underline {
   text-decoration: underline;
 }

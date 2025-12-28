@@ -3,7 +3,17 @@
 import { useLayoutStore } from "@/src/presentation/stores/layoutStore";
 import { animated, useSpring } from "@react-spring/web";
 import { useTheme } from "next-themes";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+
+const navItems = [
+  { href: "/dashboard", label: "Dashboard", icon: "📊" },
+  { href: "/projects", label: "Projects", icon: "📁" },
+  { href: "/payment-links", label: "Payment Links", icon: "🔗" },
+  { href: "/invoices", label: "Invoices", icon: "📄" },
+  { href: "/payers", label: "Payers", icon: "👥" },
+];
 
 /**
  * Modern Header component for MainLayout
@@ -13,6 +23,7 @@ export function MainHeader() {
   const { theme, setTheme } = useTheme();
   const { layout, toggleLayout } = useLayoutStore();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   // Prevent hydration mismatch
   useEffect(() => {
@@ -49,22 +60,25 @@ export function MainHeader() {
     <header className="main-header">
       <div className="main-header-container">
         {/* Logo */}
-        <animated.div style={logoSpring} className="main-logo">
-          <span className="main-logo-icon">🔌</span>
-          <span className="main-logo-text">PlugPay</span>
+        <animated.div style={logoSpring}>
+          <Link href="/" className="main-logo">
+            <span className="main-logo-icon">🔌</span>
+            <span className="main-logo-text">PlugPay</span>
+          </Link>
         </animated.div>
 
         {/* Navigation */}
         <animated.nav style={navSpring} className="main-nav">
-          <a href="#features" className="main-nav-link">
-            Features
-          </a>
-          <a href="#pricing" className="main-nav-link">
-            Pricing
-          </a>
-          <a href="#docs" className="main-nav-link">
-            Docs
-          </a>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`main-nav-link ${pathname === item.href ? "main-nav-link-active" : ""}`}
+            >
+              <span className="main-nav-icon">{item.icon}</span>
+              {item.label}
+            </Link>
+          ))}
         </animated.nav>
 
         {/* Actions */}
@@ -90,14 +104,9 @@ export function MainHeader() {
           </button>
 
           {/* Sign In */}
-          <a href="/login" className="main-button-outline">
+          <Link href="/login" className="main-button-outline">
             Sign In
-          </a>
-
-          {/* Get Started */}
-          <a href="/register" className="main-button-primary">
-            Get Started
-          </a>
+          </Link>
         </animated.div>
       </div>
     </header>
